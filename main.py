@@ -1,68 +1,48 @@
 import touch
 import display
-import json
+import ujson as json
 import led
 
 led.off(led.RED)
 
-with open('data.json') as file:
-    data = json.load(file)
+# Load weather data from 'weather.json'
+with open('weather.json') as file:
+    weather_data = json.load(file)
 
-index = 1
-
-numOfSlides = len(data)
+index = 0
 maxCharLength = 24
 
 def main():
-    display.CLEAR
+    display.clear()
     y = 0
-    note_group = []
-    for slide in data:
-        slide_number = slide['slideNumber']
-        notes = slide['notes']
-        if slide_number == index:
-            num = display.Text(f"{slide_number}", 640, 0, display.WHITE, justify=display.TOP_RIGHT)
-            for note in notes:
-                if len(note) > maxCharLength:
-                    current_note = split_string(note, maxCharLength)
-                    firstStr = current_note[0]
-                    secondStr = current_note[1]
-                    firstStr = display.Text(f"{firstStr}", 0, y, display.WHITE)
-                    y = y + 50
-                    secondStr = display.Text(f"{secondStr}", 0, y, display.WHITE)
-                    note_group.append(firstStr)
-                    note_group.append(secondStr)
-                    y = y + 50
-                else:
-                    current_note = display.Text(f"{note}", 0, y, display.WHITE)
-                    note_group.append(current_note)
-                    y = y + 50
-            display.show(note_group, num)
-            return {
-                "slideNumber": slide_number,
-                "notes": notes
-            }
+
+    if index < len(weather_data):
+        current_weather = weather_data[index]
+        for key, value in current_weather.items():
+            line = "{}: {}".format(key, value)
+            if len(line) > maxCharLength:
+                split_lines = split_string(line, maxCharLength)
+                for sub_line in split_lines:
+                    display.text(sub_line, 0, y, display.WHITE)
+                    y += 20
+            else:
+                display.text(line, 0, y, display.WHITE)
+                y += 20
+        display.show()
+    else:
+        display.text("No data", 0, 0, display.WHITE)
+        display.show()
 
 def nav(touch_input):
-    if touch_input == touch.A:
-        global index
-        if index < len(data):
-            index += 1
-        print(index)
-        main()
-    if touch_input == touch.B:
-        global index
-        if index > 0:
-            index -= 1
-        print(index)
-        main()
+    global index
+    if touch_input == touch.A and index < len(weather_data) - 1:
+        index += 1
+    elif touch_input == touch.B and index > 0:
+        index -= 1
+    main()
 
 def split_string(string, split_point):
-    string1 = string[:split_point]
-    string2 = string[split_point:]
-    return string1, string2
-
-
+    return [string[:split_point], string[split_point:]]
 
 touch.callback(touch.EITHER, nav)
 

@@ -1,0 +1,94 @@
+{
+    "@context": [
+        "https://geojson.org/geojson-ld/geojson-context.jsonld",
+        {
+            "@version": "1.1",
+            "wx": "https://api.weather.gov/ontology#",
+            "s": "https://schema.org/",
+            "geo": "http://www.opengis.net/ont/geosparql#",
+            "unit": "http://codes.wmo.int/common/unit/",
+            "@vocab": "https://api.weather.gov/ontology#",
+            "geometry": {
+                "@id": "s:GeoCoordinates",
+                "@type": "geo:wktLiteral"
+            },
+            "city": "s:addressLocality",
+            "state": "s:addressRegion",
+            "distance": {
+                "@id": "s:Distance",
+                "@type": "s:QuantitativeValue"
+            },
+            "bearing": {
+                "@type": "s:QuantitativeValue"
+            },
+            "value": {
+                "@id": "s:value"
+            },
+            "unitCode": {
+                "@id": "s:unitCode",
+                "@type": "@id"
+            },
+            "forecastOffice": {
+                "@type": "@id"
+            },
+            "forecastGridData": {
+                "@type": "@id"
+            },
+            "publicZone": {
+                "@type": "@id"
+            },
+            "county": {
+                "@type": "@id"
+            }
+        }
+    ],
+    "id": "https://api.weather.gov/points/40.1163,-88.2435",
+    "type": "Feature",
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -88.243499999999997,
+            40.116300000000003
+        ]
+    },
+    "properties": {
+        "@id": "https://api.weather.gov/points/40.1163,-88.2435",
+        "@type": "wx:Point",
+        "cwa": "ILX",
+        "forecastOffice": "https://api.weather.gov/offices/ILX",
+        "gridId": "ILX",
+        "gridX": 96,
+        "gridY": 73,
+        "forecast": "https://api.weather.gov/gridpoints/ILX/96,73/forecast",
+        "forecastHourly": "https://api.weather.gov/gridpoints/ILX/96,73/forecast/hourly",
+        "forecastGridData": "https://api.weather.gov/gridpoints/ILX/96,73",
+        "observationStations": "https://api.weather.gov/gridpoints/ILX/96,73/stations",
+        "relativeLocation": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -88.273651999999998,
+                    40.115057
+                ]
+            },
+            "properties": {
+                "city": "Champaign",
+                "state": "IL",
+                "distance": {
+                    "unitCode": "wmoUnit:m",
+                    "value": 2567.7249809855998
+                },
+                "bearing": {
+                    "unitCode": "wmoUnit:degree_(angle)",
+                    "value": 86
+                }
+            }
+        },
+        "forecastZone": "https://api.weather.gov/zones/forecast/ILZ045",
+        "county": "https://api.weather.gov/zones/county/ILC019",
+        "fireWeatherZone": "https://api.weather.gov/zones/fire/ILZ045",
+        "timeZone": "America/Chicago",
+        "radarStation": "KILX"
+    }
+}

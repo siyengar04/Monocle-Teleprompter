@@ -16,6 +16,7 @@ const DECODER = new TextDecoder();
 const statusMsg = document.getElementById('status');
 const connectBtn = document.getElementById('connectBtn');
 const sendBtn = document.getElementById('send');
+var myMonocle
 class Bytes {
     buf = EMPTY;
     len = 0;
@@ -210,6 +211,17 @@ function send() {
     console.log(file)
     console.log('json uploaded')
 }
+function sendData(weatherData) {
+    if (!myMonocle) { 
+        console.error('No Monocle connected'); 
+        return; 
+    }
+    const weatherDataString = JSON.stringify(weatherData);
+    const sendDataString = `import device; f = open("weather.json", "w"); f.write('${weatherDataString}'); f.close(); device.reset()`;
+
+    myMonocle.repl(sendDataString);
+    console.log('Weather data uploaded');
+}
 
 function slides() {
     //send()
@@ -221,3 +233,4 @@ function slides() {
     myMonocle.repl(file)
     console.log('os uploaded')
 }
+module.exports = { connect, sendData };
